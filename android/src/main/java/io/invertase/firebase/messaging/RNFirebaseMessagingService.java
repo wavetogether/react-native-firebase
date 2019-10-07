@@ -37,6 +37,16 @@ public class RNFirebaseMessagingService extends FirebaseMessagingService {
       Intent notificationEvent = new Intent(REMOTE_NOTIFICATION_EVENT);
       notificationEvent.putExtra("notification", message);
 
+      if (message.getData().get("message") != null && message.getData().get("message").split(":")[0].equals("call_cancel")) {
+        SharedPreferences pref = getSharedPreferences("react-native", Context.MODE_PRIVATE);
+        String destinationUid = pref.getString("destinationUid", "");
+        String uid = message.getData().get("message").split(":")[1];
+
+        if (uid.equals(destinationUid)) {
+          android.os.Process.killProcess(android.os.Process.myPid());
+        }
+      }
+
       // Broadcast it to the (foreground) RN Application
       LocalBroadcastManager
         .getInstance(this)
@@ -44,6 +54,17 @@ public class RNFirebaseMessagingService extends FirebaseMessagingService {
     } else {
       // It's a data message
       // If the app is in the foreground we send it to the Messaging module
+
+      if (message.getData().get("message") != null && message.getData().get("message").split(":")[0].equals("call_cancel")) {
+        SharedPreferences pref = getSharedPreferences("react-native", Context.MODE_PRIVATE);
+        String destinationUid = pref.getString("destinationUid", "");
+        String uid = message.getData().get("message").split(":")[1];
+
+        if (uid.equals(destinationUid)) {
+          android.os.Process.killProcess(android.os.Process.myPid());
+        }
+      }
+
       if (Utils.isAppInForeground(this.getApplicationContext())) {
         Intent messagingEvent = new Intent(MESSAGE_EVENT);
         messagingEvent.putExtra("message", message);

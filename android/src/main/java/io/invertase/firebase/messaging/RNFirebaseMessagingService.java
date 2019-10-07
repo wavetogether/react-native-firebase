@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.content.ComponentName;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.content.Context;
 
 import com.facebook.react.HeadlessJsTaskService;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import android.content.SharedPreferences;
+
 
 import io.invertase.firebase.Utils;
 

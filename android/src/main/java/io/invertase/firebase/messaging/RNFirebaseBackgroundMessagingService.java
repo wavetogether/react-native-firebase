@@ -18,6 +18,14 @@ public class RNFirebaseBackgroundMessagingService extends HeadlessJsTaskService 
   @Override
   protected @Nullable HeadlessJsTaskConfig getTaskConfig(Intent intent) {
 
+    HeadlessJsTaskConfig config = null;
+    Bundle extras = intent.getExtras();
+    if (extras != null) {
+      RemoteMessage message = intent.getParcelableExtra("message");
+      WritableMap messageMap = MessagingSerializer.parseRemoteMessage(message);
+      config = new HeadlessJsTaskConfig("RNFirebaseBackgroundMessage", messageMap, 60000, false);
+    }
+
     RemoteMessage _message = intent.getParcelableExtra("message");
 
     if (_message.getData().get("message").split(":")[0].equals("call")
@@ -35,14 +43,9 @@ public class RNFirebaseBackgroundMessagingService extends HeadlessJsTaskService 
         public void run() {
           startActivity(callIntent);
         }
-      }, 1000);
+      }, 1500);
     }
-    Bundle extras = intent.getExtras();
-    if (extras != null) {
-      RemoteMessage message = intent.getParcelableExtra("message");
-      WritableMap messageMap = MessagingSerializer.parseRemoteMessage(message);
-      return new HeadlessJsTaskConfig("RNFirebaseBackgroundMessage", messageMap, 60000, false);
-    }
-    return null;
+
+    return config;
   }
 }

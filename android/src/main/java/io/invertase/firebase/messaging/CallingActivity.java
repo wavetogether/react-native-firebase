@@ -1,5 +1,6 @@
 package io.invertase.firebase.messaging;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -60,6 +61,11 @@ public class CallingActivity extends Activity {
 
     View decorView = window.getDecorView();
     decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+
+    ActionBar actionBar = this.getActionBar();
+    if (actionBar != null) {
+      actionBar.hide();
+    }
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
       window.setStatusBarColor(Color.TRANSPARENT);
@@ -191,6 +197,12 @@ public class CallingActivity extends Activity {
     }
   }
 
+  private void cancelVibrate() {
+    if (v != null) {
+      v.cancel();
+    }
+  }
+
   @Override
   public void onResume() {
     super.onResume();
@@ -200,18 +212,18 @@ public class CallingActivity extends Activity {
   @Override
   public void onDestroy() {
     super.onDestroy();
-    v.cancel();
+    this.cancelVibrate();
   }
 
   @Override
   protected void onPause() {
     super.onPause();
-    v.cancel();
+    this.cancelVibrate();
   }
 
   @Override
   public void onBackPressed() {
     super.onBackPressed();
-    v.cancel();
+    this.cancelVibrate();
   }
 }

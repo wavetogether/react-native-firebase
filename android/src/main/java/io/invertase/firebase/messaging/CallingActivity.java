@@ -3,6 +3,7 @@ package io.invertase.firebase.messaging;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.Build;
 import android.os.Vibrator;
@@ -158,11 +159,8 @@ public class CallingActivity extends Activity {
       }
     });
 
-    if (android.os.Build.VERSION.SDK_INT >= 23) {
-      v = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
-      long[] pattern = { 500, 300 };
-      v.vibrate(pattern, 0);
-    }
+
+    this.vibrateApp();
 
     handler = new Handler();
     handler.postDelayed(new Runnable() {
@@ -173,14 +171,30 @@ public class CallingActivity extends Activity {
     }, 30000);
   }
 
+  private void vibrateApp() {
+    AudioManager am = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+    switch (am.getRingerMode()) {
+      case AudioManager.RINGER_MODE_SILENT:
+        break;
+      case AudioManager.RINGER_MODE_VIBRATE:
+      case AudioManager.RINGER_MODE_NORMAL:
+        if (android.os.Build.VERSION.SDK_INT >= 23) {
+
+          if (v == null) {
+            v = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+          }
+
+          long[] pattern = { 500, 300 };
+          v.vibrate(pattern, 0);
+        }
+        break;
+    }
+  }
+
   @Override
   public void onResume() {
     super.onResume();
-
-    if (android.os.Build.VERSION.SDK_INT >= 23) {
-      long[] pattern = { 500, 300 };
-      v.vibrate(pattern, 0);
-    }
+    this.vibrateApp();
   }
 
   @Override

@@ -111,6 +111,7 @@ public class CallingActivity extends Activity {
 
           handler.removeCallbacksAndMessages(null);
           startActivity(i);
+          finish();
         } else if (v.equals(callDecline)) {
           SharedPreferences pref = getApplicationContext().getSharedPreferences(preferencesName, Context.MODE_PRIVATE);
           SharedPreferences.Editor editor = pref.edit();

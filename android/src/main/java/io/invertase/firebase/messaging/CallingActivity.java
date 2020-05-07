@@ -56,11 +56,7 @@ public class CallingActivity extends Activity {
     window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
     window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
     window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-    window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 
-    View decorView = window.getDecorView();
-    decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 
     ActionBar actionBar = this.getActionBar();
     if (actionBar != null) {
@@ -106,7 +102,7 @@ public class CallingActivity extends Activity {
         if (v.equals(callAnswer)) {
           Intent i = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
           // i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-          i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+          i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
           SharedPreferences pref = getApplicationContext().getSharedPreferences(preferencesName, Context.MODE_PRIVATE);
           SharedPreferences.Editor editor = pref.edit();
@@ -115,7 +111,6 @@ public class CallingActivity extends Activity {
 
           handler.removeCallbacksAndMessages(null);
           startActivity(i);
-          // finish();
         } else if (v.equals(callDecline)) {
           SharedPreferences pref = getApplicationContext().getSharedPreferences(preferencesName, Context.MODE_PRIVATE);
           SharedPreferences.Editor editor = pref.edit();

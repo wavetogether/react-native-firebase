@@ -276,10 +276,11 @@ public class RNFirebaseNotifications extends ReactContextBaseJavaModule implemen
 
   @Override
   public void onNewIntent(Intent intent) {
+    NotificationManager manager = (NotificationManager) this.getReactApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+    manager.cancel(0);
+
     WritableMap notificationOpenMap = parseIntentForNotification(intent);
     if (notificationOpenMap != null) {
-			NotificationManager manager = (NotificationManager) this.getReactApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-			manager.cancel(0);
 
       Utils.sendEvent(
         getReactApplicationContext(),

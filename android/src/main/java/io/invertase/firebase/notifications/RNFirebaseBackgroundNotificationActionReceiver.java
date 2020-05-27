@@ -1,11 +1,12 @@
 package io.invertase.firebase.notifications;
 
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ComponentName;
 import android.os.Bundle;
-import android.support.v4.app.RemoteInput;
+import androidx.core.app.RemoteInput;
 
 import com.facebook.react.HeadlessJsTaskService;
 import com.facebook.react.ReactApplication;
@@ -43,6 +44,9 @@ public class RNFirebaseBackgroundNotificationActionReceiver extends BroadcastRec
     }
 
     if (Utils.isAppInForeground(context)) {
+			NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+			manager.cancel(0);
+
       WritableMap notificationOpenMap = toNotificationOpenMap(intent);
 
       ReactApplication reactApplication = (ReactApplication) context.getApplicationContext();

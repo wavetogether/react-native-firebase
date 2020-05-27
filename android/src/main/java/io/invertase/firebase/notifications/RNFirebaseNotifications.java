@@ -1,14 +1,15 @@
 package io.invertase.firebase.notifications;
 
 import android.app.Activity;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.RemoteInput;
-import android.support.v4.content.LocalBroadcastManager;
+import androidx.core.app.RemoteInput;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.facebook.react.bridge.ActivityEventListener;
@@ -274,6 +275,9 @@ public class RNFirebaseNotifications extends ReactContextBaseJavaModule implemen
   public void onNewIntent(Intent intent) {
     WritableMap notificationOpenMap = parseIntentForNotification(intent);
     if (notificationOpenMap != null) {
+			NotificationManager manager = (NotificationManager) this.getReactApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+			manager.cancel(0);
+
       Utils.sendEvent(
         getReactApplicationContext(),
         "notifications_notification_opened",

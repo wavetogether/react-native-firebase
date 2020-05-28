@@ -1,16 +1,17 @@
 package io.invertase.firebase.notifications;
 
 import android.app.Activity;
-import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import androidx.core.app.RemoteInput;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import android.support.v4.app.RemoteInput;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.app.NotificationManager;
+
 
 import com.facebook.react.bridge.ActivityEventListener;
 import com.facebook.react.bridge.Arguments;
@@ -81,8 +82,10 @@ public class RNFirebaseNotifications extends ReactContextBaseJavaModule implemen
   public void cancelNotification(String notificationId, Promise promise) {
     notificationManager.cancelNotification(notificationId, promise);
 
-    NotificationManager manager = (NotificationManager) this.getReactApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-    manager.cancel(0);
+    if (notificationId.equals("wave_call_incomming")) {
+      NotificationManager manager = (NotificationManager) this.getReactApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+      manager.cancel(0);
+    }
   }
 
   @ReactMethod
@@ -276,12 +279,8 @@ public class RNFirebaseNotifications extends ReactContextBaseJavaModule implemen
 
   @Override
   public void onNewIntent(Intent intent) {
-    NotificationManager manager = (NotificationManager) this.getReactApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-    manager.cancel(0);
-
     WritableMap notificationOpenMap = parseIntentForNotification(intent);
     if (notificationOpenMap != null) {
-
       Utils.sendEvent(
         getReactApplicationContext(),
         "notifications_notification_opened",

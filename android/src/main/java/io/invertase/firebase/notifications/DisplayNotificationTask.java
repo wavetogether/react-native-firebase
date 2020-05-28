@@ -12,6 +12,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.RemoteInput;
 import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
@@ -25,8 +27,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.RemoteInput;
 import io.invertase.firebase.Utils;
 
 public class DisplayNotificationTask extends AsyncTask<Void, Void, Void> {

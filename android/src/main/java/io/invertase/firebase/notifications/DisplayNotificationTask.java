@@ -1,5 +1,7 @@
 package io.invertase.firebase.notifications;
 
+import android.annotation.SuppressLint;
+import android.app.KeyguardManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -12,8 +14,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.RemoteInput;
+import android.os.PowerManager;
 import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
@@ -26,6 +27,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.RemoteInput;
 
 import io.invertase.firebase.Utils;
 
@@ -381,10 +384,20 @@ public class DisplayNotificationTask extends AsyncTask<Void, Void, Void> {
         android.getString("clickAction")
       );
 
-			Intent buttonIntent = new Intent();
-			PendingIntent fullScreenIntent = PendingIntent.getBroadcast(context, 0, buttonIntent,0);
+      Intent buttonIntent = new Intent();
+      PendingIntent fullScreenIntent = PendingIntent.getBroadcast(context, 0, buttonIntent,0);
       nb = nb.setContentIntent(contentIntent);
       nb = nb.setFullScreenIntent(fullScreenIntent, true);
+
+      // to wake up screen
+      PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+      @SuppressLint("InvalidWakeLockTag") PowerManager.WakeLock wakeLock = pm.newWakeLock((PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP), "TAG");
+      wakeLock.acquire();
+
+// to release screen lock
+      KeyguardManager keyguardManager = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+      KeyguardManager.KeyguardLock keyguardLock = keyguardManager.newKeyguardLock("TAG");
+      keyguardLock.disableKeyguard();
 
       // Build the notification and send it
       Notification builtNotification = nb.build();
@@ -429,17 +442,17 @@ public class DisplayNotificationTask extends AsyncTask<Void, Void, Void> {
     int icon = getIcon(action.getString("icon"));
     String title = action.getString("title");
 
-		assert actionKey != null;
-		if (actionKey.equals("ignore")) {
-			Intent buttonIntent = new Intent(context, ButtonReceiver.class);
-			PendingIntent btPendingIntent = PendingIntent.getBroadcast(context, 0, buttonIntent,0);
+    assert actionKey != null;
+    if (actionKey.equals("ignore")) {
+      Intent buttonIntent = new Intent(context, ButtonReceiver.class);
+      PendingIntent btPendingIntent = PendingIntent.getBroadcast(context, 0, buttonIntent,0);
 
-    	return  new NotificationCompat.Action.Builder(
-				icon,
-				title,
-				btPendingIntent
-			).build();
-		}
+      return  new NotificationCompat.Action.Builder(
+        icon,
+        title,
+        btPendingIntent
+      ).build();
+    }
 
     NotificationCompat.Action.Builder ab = new NotificationCompat.Action.Builder(
       icon,

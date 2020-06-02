@@ -10,7 +10,7 @@
   <ImageView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:src="@drawable/bgndcallscreen_3x" />
+    android:src="@drawable/img_background" />
 
   <LinearLayout
     android:id="@+id/content"
@@ -18,49 +18,50 @@
     android:layout_height="match_parent"
     android:layout_alignParentLeft="true"
     android:gravity="center_horizontal"
+		android:weightSum="100"
     android:orientation="vertical">
     <View
       android:layout_width="match_parent"
       android:layout_height="0px"
-      android:layout_weight="23" />
-
+      android:layout_weight="20" />
     <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="0px"
+			android:layout_weight="80"
+			android:weightSum="2"
       android:gravity="center_horizontal"
       android:baselineAligned="false"
       android:orientation="vertical"
-      android:layout_weight="60">
+			android:layout_marginBottom="56dp">
 
       <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="138dp"
-        android:layout_height="138dp"
-        android:src="@drawable/logocallscreen_3x" />
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:src="@drawable/img_logo_with_border" />
 
       <TextView
         android:id="@+id/call_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
-        android:text="Chanwook의 파티룸"
+        android:text="Chanwook"
         android:textColor="@android:color/white"
         android:textStyle="bold"
-        android:textSize="24sp" />
+        android:textSize="28sp" />
 
       <TextView
         android:id="@+id/call_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
-        android:alpha="0.9"
         android:gravity="center_horizontal"
-        android:text="Chwook, 조재민, Sungsil Kim님 외 5명이 있는 파티룸에서 전화가 왔어요"
-        android:textColor="@android:color/white"
+        android:text="WAVE"
+        android:textColor="#bd94f8"
         android:textSize="14sp" />
 
       <RelativeLayout
@@ -77,27 +78,14 @@
           <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="60dp"
+            android:layout_marginLeft="36dp"
             android:layout_centerHorizontal="false">
 
             <ImageView
               android:id="@+id/call_decline"
-              android:layout_width="96dp"
-              android:layout_height="96dp"
-              android:src="@drawable/btncalldecline_3x" />
-
-            <TextView
-              android:id="@+id/tv_decline"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_marginLeft="24dp"
-              android:layout_marginTop="96dp"
-              android:layout_marginRight="24dp"
-              android:alpha="0.9"
-              android:gravity="center_horizontal"
-              android:text="거절하기"
-              android:textColor="@android:color/white"
-              android:textSize="14sp" />
+              android:layout_width="72dp"
+              android:layout_height="72dp"
+              android:src="@drawable/button_call_deny" />
           </RelativeLayout>
 
           <RelativeLayout
@@ -107,25 +95,12 @@
 
             <ImageView
               android:id="@+id/call_answer"
-              android:layout_width="96dp"
-              android:layout_height="96dp"
-              android:layout_marginRight="60dp"
+							android:layout_width="72dp"
+							android:layout_height="72dp"
+              android:layout_marginRight="36dp"
               android:layout_alignParentRight="true"
 
-              android:src="@drawable/btncallaccept_3x" />
-
-            <TextView
-              android:id="@+id/tv_accept"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_alignParentRight="true"
-              android:layout_marginRight="80dp"
-
-              android:layout_marginTop="96dp"
-              android:alpha="0.9"
-              android:text="들어가기"
-              android:textColor="@android:color/white"
-              android:textSize="14sp" />
+              android:src="@drawable/button_call_accept" />
           </RelativeLayout>
 
         </LinearLayout>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black_overlay">#66000000</color>
+    <color name="wave_color">#7E31EE</color>
+		<color name="status_bar_color">@android:color/transparent</color>
+		<color name="background">#4f1e91</color>
+</resources>

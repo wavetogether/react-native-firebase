@@ -3,7 +3,6 @@ package io.invertase.firebase.messaging;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Process;
 import android.util.Log;
 
 import com.facebook.react.HeadlessJsTaskService;
@@ -37,13 +36,15 @@ public class RNFirebaseBackgroundMessagingService extends HeadlessJsTaskService 
       Bundle b = new Bundle();
       b.putString("message", _message.getData().get("message"));
       callIntent.putExtras(b);
-      Handler delayHandler = new Handler();
-      delayHandler.postDelayed(new Runnable() {
-        @Override
-        public void run() {
-          startActivity(callIntent);
-        }
-      }, 1500);
+
+			Handler delayHandler = new Handler();
+			delayHandler.postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					startActivity(callIntent);
+				}
+			}, 3000);
+
     }
 
     return config;

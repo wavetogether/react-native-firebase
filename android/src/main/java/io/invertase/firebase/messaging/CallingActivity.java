@@ -9,6 +9,9 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.media.AudioManager;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,6 +31,7 @@ public class CallingActivity extends Activity {
   private String destinationUid;
   private String preferencesName = "react-native";
   private Handler handler;
+  private Ringtone r;
 
   @SuppressLint("SourceLockedOrientationActivity")
 	@Override
@@ -41,7 +45,7 @@ public class CallingActivity extends Activity {
     SharedPreferences.Editor editor = pref.edit();
     editor.putString("destinationUid", destinationUid).commit();
 
-    ActionBar actionBar = this.getActionBar();
+    ActionBar actionBar = getActionBar();
     if (actionBar != null) {
       actionBar.hide();
     }
@@ -57,7 +61,7 @@ public class CallingActivity extends Activity {
 			window.setStatusBarColor(Color.TRANSPARENT);
 		}
 
-		this.hideSoftMenuBar();
+		hideSoftMenuBar();
 
 		if(getResources().getBoolean(R.bool.portrait_only)){
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -136,7 +140,7 @@ public class CallingActivity extends Activity {
     });
 
 
-    this.vibrateApp();
+    vibrateApp();
 
     handler = new Handler();
     handler.postDelayed(new Runnable() {
@@ -147,6 +151,17 @@ public class CallingActivity extends Activity {
     }, 30000);
   }
 
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent event) {
+  	switch (event.getKeyCode()) {
+			case KeyEvent.KEYCODE_VOLUME_DOWN:
+			case KeyEvent.KEYCODE_VOLUME_MUTE:
+				cancelVibrate();
+				return true;
+		}
+		return super.dispatchKeyEvent(event);
+	}
+
 	public void hideSoftMenuBar() {
 		getWindow().getDecorView().setSystemUiVisibility(
 			View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
@@ -156,26 +171,21 @@ public class CallingActivity extends Activity {
 		);
 	}
 
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		switch (keyCode) {
-			case KeyEvent.KEYCODE_VOLUME_DOWN:
-				this.cancelVibrate();
-				return true;
-			default:
-				return super.onKeyDown(keyCode, event);
-		}
-	}
-
-  private void vibrateApp() {
+	private void vibrateApp() {
     AudioManager am = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
     switch (am.getRingerMode()) {
       case AudioManager.RINGER_MODE_SILENT:
         break;
-      case AudioManager.RINGER_MODE_VIBRATE:
-      case AudioManager.RINGER_MODE_NORMAL:
-        if (android.os.Build.VERSION.SDK_INT >= 23) {
+			case AudioManager.RINGER_MODE_NORMAL:
+				if (r == null) {
+					Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+					r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+				}
 
+				r.play();
+				break;
+      case AudioManager.RINGER_MODE_VIBRATE:
+        if (android.os.Build.VERSION.SDK_INT >= 23) {
           if (v == null) {
             v = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
           }
@@ -191,29 +201,33 @@ public class CallingActivity extends Activity {
     if (v != null) {
       v.cancel();
     }
+
+    if (r != null) {
+    	r.stop();
+		}
   }
 
   @Override
   public void onResume() {
     super.onResume();
-    this.vibrateApp();
+    vibrateApp();
   }
 
   @Override
   public void onDestroy() {
     super.onDestroy();
-    this.cancelVibrate();
+    cancelVibrate();
   }
 
   @Override
   protected void onPause() {
     super.onPause();
-    this.cancelVibrate();
+    cancelVibrate();
   }
 
   @Override
   public void onBackPressed() {
     super.onBackPressed();
-    this.cancelVibrate();
+    cancelVibrate();
   }
 }

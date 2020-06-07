@@ -64,6 +64,9 @@ public class CallingActivity extends Activity {
     hideSoftMenuBar();
     setContentView(R.layout.activity_calling);
 
+		int orientation = getResources().getInteger(R.integer.orientation);
+		setRequestedOrientation(orientation);
+
     TextView tv_title = findViewById(R.id.call_title);
     tv_title.setText(message.split(";")[0]);
 

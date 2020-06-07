@@ -17,9 +17,9 @@
       android:configChanges="orientation|keyboardHidden|screenSize"
       android:label="WAVE"
       android:launchMode="singleTask"
-      android:screenOrientation="portrait"
+			android:screenOrientation="@integer/orientation"
       android:showOnLockScreen="true"
-      tools:ignore="UnusedAttribute">
+      tools:ignore="ManifestResource,UnusedAttribute">
     </activity>
   </application>
 </manifest>

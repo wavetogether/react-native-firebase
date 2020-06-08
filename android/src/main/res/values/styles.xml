@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-	<style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
-		<item name="colorPrimaryDark">@color/status_bar_color</item>
-		<item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
-		<item name="statusBarBackground">@color/status_bar_color</item>
-		<item name="android:windowBackground">@color/background</item>
+  <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+    <item name="colorPrimaryDark">@color/status_bar_color</item>
+    <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+    <item name="statusBarBackground">@color/status_bar_color</item>
+    <item name="android:windowBackground">@color/background</item>
 
-		<item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent</item>
-		<item name="android:windowEnableSplitTouch">false</item>
-		<item name="android:windowTranslucentStatus" tools:targetApi="kitkat">false</item>
-		<item name="android:windowTranslucentNavigation" tools:targetApi="kitkat">true</item>
-		<item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="lollipop">true</item>
-		<item name="android:windowNoTitle">true</item>
-	</style>
+    <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent</item>
+    <item name="android:windowEnableSplitTouch">false</item>
+    <item name="android:windowTranslucentStatus" tools:targetApi="kitkat">false</item>
+    <item name="android:windowTranslucentNavigation" tools:targetApi="kitkat">false</item>
+    <item name="android:windowDrawsSystemBarBackgrounds" tools:targetApi="lollipop">true</item>
+    <item name="android:windowNoTitle">true</item>
+  </style>
 
-	<style name="SplashScreen" parent="AppTheme">
-		<item name="android:windowAnimationStyle">@style/SplashScreenAnim</item>
-	</style>
+  <style name="SplashScreen" parent="AppTheme">
+    <item name="android:windowAnimationStyle">@style/SplashScreenAnim</item>
+  </style>
 
-	<style name="SplashScreenAnim">
-		<item name="android:windowEnterAnimation">@android:anim/fade_in</item>
-		<item name="android:windowExitAnimation">@android:anim/fade_out</item>
-		<item name="android:windowEnterTransition" tools:targetApi="lollipop">@android:anim/fade_in</item>
-		<item name="android:windowExitTransition" tools:targetApi="lollipop">@android:anim/fade_out</item>
-	</style>
+  <style name="SplashScreenAnim">
+    <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+    <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    <item name="android:windowEnterTransition" tools:targetApi="lollipop">@android:anim/fade_in</item>
+    <item name="android:windowExitTransition" tools:targetApi="lollipop">@android:anim/fade_out</item>
+  </style>
 </resources>

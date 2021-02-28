@@ -43,7 +43,7 @@ public class RNFirebaseBackgroundMessagingService extends HeadlessJsTaskService 
 				public void run() {
 					startActivity(callIntent);
 				}
-			}, 3000);
+			}, 1000);
 
     }
 
